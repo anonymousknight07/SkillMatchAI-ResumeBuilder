@@ -15,10 +15,10 @@ const page = () => {
       <section>
         <div className="py-8 px-6 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12 md:px-10">
           <h1 className="mt-4 lg:mt-8 mb-4 text-4xl font-extrabold tracking-tight leading-none text-black md:text-5xl lg:text-6xl">
-          The Ultimate AI Powered  <span className="text-primary-700 max-sm:block">Resume Builder</span>
+           Create Your Resume with <span className="text-primary-700 max-sm:block">Resume Builder</span>
           </h1>
           <p className="mb-8 text-lg font-normal text-gray-700 lg:text-xl sm:px-16 xl:px-48">
-          Effortlessly Craft a Standout Resume with Our AI-Powered Builder
+          Easily Create Your Dream Resume with Our Fun AI Tool!
           </p>
           <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <Link
@@ -103,11 +103,11 @@ const page = () => {
           <span className="text-sm text-gray-500 sm:text-center">
             © 2024{" "}
             <span className="hover:text-primary-500 hover:cursor-pointer">
-              ResumeAI™
+              SunriseMitra-ResumeBuilder™
             </span>
             . All Rights Reserved.
           </span>
-          <Link href="https://github.com/Mahmud0808" className="me-4 md:me-6">
+          <Link href="https://github.com/anonymousknight07" className="me-4 md:me-6">
             <span className="hover:text-primary-500 mt-3 text-sm font-medium text-gray-500 sm:mt-0">
               Made by Akshat 
             </span>

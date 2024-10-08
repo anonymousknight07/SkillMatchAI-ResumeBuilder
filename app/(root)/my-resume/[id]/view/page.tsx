@@ -17,16 +17,16 @@ export async function generateMetadata({
 
   if (resume?.firstName === undefined && resume?.lastName === undefined) {
     return {
-      title: "ResumeAI - Professional AI Resume Builder",
+      title: "Sunrisemitra ResumeBuilder - AI-Powered Professional Resume Creator",
       description:
-        "Generate a polished, professional resume in just a few clicks with our AI-powered resume builder.",
+        "Easily craft a standout professional resume with Sunrisemitra’s AI-driven Resume Builder. With just a few clicks, generate a personalized and polished resume that highlights your skills and experience.",
     };
   }
 
   return {
     title: `${resume?.firstName}${resume?.firstName && " "}
-    ${resume?.lastName}${resume?.lastName && " "}- ResumeAI`,
-    description: `${resume?.firstName} ${resume?.lastName}'s Resume. Powered by ResumeAI.`,
+    ${resume?.lastName}${resume?.lastName && " "}- Sunrisemitra Resume Builder`,
+    description: `${resume?.firstName} ${resume?.lastName}'s Resume. Powered by Sunrisemitra Resume Builder.`,
   };
 }
 
