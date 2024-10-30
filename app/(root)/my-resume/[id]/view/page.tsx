@@ -17,16 +17,16 @@ export async function generateMetadata({
 
   if (resume?.firstName === undefined && resume?.lastName === undefined) {
     return {
-      title: "Sunrisemitra ResumeBuilder - AI-Powered Professional Resume Creator",
+      title: "Skillmatch AI - AI-Powered Professional Resume Creator",
       description:
-        "Easily craft a standout professional resume with Sunrisemitra’s AI-driven Resume Builder. With just a few clicks, generate a personalized and polished resume that highlights your skills and experience.",
+        "Easily craft a standout professional resume with Skillmatch’s AI-driven Resume Builder. With just a few clicks, generate a personalized and polished resume that highlights your skills and experience.",
     };
   }
 
   return {
     title: `${resume?.firstName}${resume?.firstName && " "}
-    ${resume?.lastName}${resume?.lastName && " "}- Sunrisemitra Resume Builder`,
-    description: `${resume?.firstName} ${resume?.lastName}'s Resume. Powered by Sunrisemitra Resume Builder.`,
+    ${resume?.lastName}${resume?.lastName && " "}- Skillmatch AI`,
+    description: `${resume?.firstName} ${resume?.lastName}'s Resume. Powered by Skillmatch AI.`,
   };
 }
 
