@@ -9,9 +9,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito" });
 
 export const metadata: Metadata = {
-  title: "SunriseMitra Resume Builder",
+  title: "Skill Match AI",
   description:
-    "Generate a polished, professional resume in just a few clicks with our AI-powered resume builder.",
+    "Skill Match AI is a platform that helps you draft the best resume based on your skills and interests, for your dream job.",
   icons: {
     icon: "/icons/favicon.ico",
   },
