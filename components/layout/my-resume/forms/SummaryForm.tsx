@@ -109,7 +109,7 @@ const SummaryForm = ({ params }: { params: { id: string } }) => {
               ) : (
                 <Brain className="h-4 w-4" />
               )}{" "}
-              Generate from AI
+              Generate using AI
             </Button>
           </div>
           <Textarea
