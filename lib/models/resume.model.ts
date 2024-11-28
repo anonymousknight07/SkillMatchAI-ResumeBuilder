@@ -13,9 +13,13 @@ const resumeSchema = new mongoose.Schema({
   phone: { type: String },
   email: { type: String },
   summary: { type: String },
+  profilePhoto: { type: String },
+  photoPosition: { type: String, enum: ['left', 'right', 'center'], default: 'right' },
   experience: [{ type: mongoose.Schema.Types.ObjectId, ref: "Experience" }],
   education: [{ type: mongoose.Schema.Types.ObjectId, ref: "Education" }],
   skills: [{ type: mongoose.Schema.Types.ObjectId, ref: "Skill" }],
+  customSections: [{ type: mongoose.Schema.Types.ObjectId, ref: "CustomSection" }],
+  socialProfiles: [{ type: mongoose.Schema.Types.ObjectId, ref: "SocialProfile" }],
   themeColor: { type: String, default: themeColors[0] },
 });
 

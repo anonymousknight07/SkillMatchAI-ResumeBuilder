@@ -4,14 +4,62 @@ import { useFormContext } from "@/lib/context/FormProvider";
 import React, { useState } from "react";
 import { Input } from "../../../ui/input";
 import { Button } from "../../../ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, Upload, X } from "lucide-react";
 import { updateResume } from "@/lib/actions/resume.actions";
 import { useToast } from "@/components/ui/use-toast";
+import { compressImage } from "@/lib/utils/imageCompression";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const PersonalDetailsForm = ({ params }: { params: { id: string } }) => {
   const { formData, handleInputChange } = useFormContext();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCompressing, setIsCompressing] = useState(false);
   const { toast } = useToast();
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        setIsCompressing(true);
+        const compressedFile = await compressImage(file);
+        
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          handleInputChange({
+            target: {
+              name: "profilePhoto",
+              value: reader.result,
+            },
+          });
+        };
+        reader.readAsDataURL(compressedFile);
+      } catch (error) {
+        toast({
+          title: "Error processing image",
+          description: "Failed to process the image. Please try again.",
+          variant: "destructive",
+          className: "bg-white",
+        });
+      } finally {
+        setIsCompressing(false);
+      }
+    }
+  };
+
+  const removePhoto = () => {
+    handleInputChange({
+      target: {
+        name: "profilePhoto",
+        value: "",
+      },
+    });
+  };
 
   const onSave = async (e: any) => {
     e.preventDefault();
@@ -25,6 +73,8 @@ const PersonalDetailsForm = ({ params }: { params: { id: string } }) => {
       address: formData?.address,
       phone: formData?.phone,
       email: formData?.email,
+      profilePhoto: formData?.profilePhoto,
+      photoPosition: formData?.photoPosition,
     };
 
     const result = await updateResume({
@@ -129,11 +179,71 @@ const PersonalDetailsForm = ({ params }: { params: { id: string } }) => {
               className="no-focus"
             />
           </div>
+          <div className="space-y-2">
+            <label className="mt-2 text-slate-700 font-semibold">
+              Profile Photo:
+            </label>
+            <div className="flex items-center gap-4">
+              <div className="relative flex-1">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  className="no-focus"
+                  disabled={isCompressing}
+                />
+                {isCompressing && (
+                  <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  </div>
+                )}
+              </div>
+              {formData?.profilePhoto && (
+                <div className="relative">
+                  <img
+                    src={formData.profilePhoto}
+                    alt="Profile"
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={removePhoto}
+                    className="absolute -top-2 -right-2 bg-red-500 rounded-full p-1 text-white hover:bg-red-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+            <p className="text-xs text-gray-500">Images will be automatically compressed for optimal performance</p>
+          </div>
+          <div className="space-y-2">
+            <label className="mt-2 text-slate-700 font-semibold">
+              Photo Position:
+            </label>
+            <Select
+              value={formData?.photoPosition || 'right'}
+              onValueChange={(value) =>
+                handleInputChange({
+                  target: { name: "photoPosition", value },
+                })
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select position" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="left">Left</SelectItem>
+                <SelectItem value="center">Center</SelectItem>
+                <SelectItem value="right">Right</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <div className="mt-5 flex justify-end">
           <Button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || isCompressing}
             className="bg-primary-700 hover:bg-primary-800 text-white"
           >
             {isLoading ? (

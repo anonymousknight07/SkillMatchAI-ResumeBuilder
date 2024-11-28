@@ -10,6 +10,8 @@ import SummaryForm from "./forms/SummaryForm";
 import ExperienceForm from "./forms/ExperienceForm";
 import EducationForm from "./forms/EducationForm";
 import SkillsForm from "./forms/SkillsForm";
+import CustomSectionsForm from "./forms/CustomSectionsForm";
+import SocialProfilesForm from "./forms/SocialProfilesForm";
 import ThemeColor from "@/components/layout/ThemeColor";
 import { useToast } from "@/components/ui/use-toast";
 import { useFormContext } from "@/lib/context/FormProvider";
@@ -17,6 +19,8 @@ import {
   addEducationToResume,
   addExperienceToResume,
   addSkillToResume,
+  addCustomSectionToResume,
+  addSocialProfilesToResume,
   updateResume,
 } from "@/lib/actions/resume.actions";
 
@@ -56,7 +60,7 @@ const ResumeEditForm = ({
             size="sm"
             disabled={isLoading}
             onClick={async () => {
-              if (activeFormIndex != 5) {
+              if (activeFormIndex != 7) {
                 setActiveFormIndex(activeFormIndex + 1);
               } else {
                 setIsLoading(true);
@@ -72,6 +76,8 @@ const ResumeEditForm = ({
                   experience: formData?.experience,
                   education: formData?.education,
                   skills: formData?.skills,
+                  customSections: formData?.customSections,
+                  socialProfiles: formData?.socialProfiles,
                 };
 
                 const updateResult = await updateResume({
@@ -102,13 +108,25 @@ const ResumeEditForm = ({
                   updates.skills
                 );
 
+                const customSectionsResult = await addCustomSectionToResume(
+                  params.id,
+                  updates.customSections
+                );
+
+                const socialProfilesResult = await addSocialProfilesToResume(
+                  params.id,
+                  updates.socialProfiles
+                );
+
                 setIsLoading(false);
 
                 if (
                   updateResult.success &&
                   experienceResult.success &&
                   educationResult.success &&
-                  skillsResult.success
+                  skillsResult.success &&
+                  customSectionsResult.success &&
+                  socialProfilesResult.success
                 ) {
                   router.push("/my-resume/" + params.id + "/view");
                 } else {
@@ -118,7 +136,9 @@ const ResumeEditForm = ({
                       updateResult?.error ||
                       experienceResult?.error ||
                       educationResult?.error ||
-                      skillsResult?.error,
+                      skillsResult?.error ||
+                      customSectionsResult?.error ||
+                      socialProfilesResult?.error,
                     variant: "destructive",
                     className: "bg-white",
                   });
@@ -126,7 +146,7 @@ const ResumeEditForm = ({
               }
             }}
           >
-            {activeFormIndex == 5 ? (
+            {activeFormIndex == 7 ? (
               <>
                 {isLoading ? (
                   <>
@@ -157,6 +177,10 @@ const ResumeEditForm = ({
       ) : activeFormIndex == 5 ? (
         <SkillsForm params={params} />
       ) : activeFormIndex == 6 ? (
+        <CustomSectionsForm params={params} />
+      ) : activeFormIndex == 7 ? (
+        <SocialProfilesForm params={params} />
+      ) : activeFormIndex == 8 ? (
         redirect("/my-resume/" + params.id + "/view")
       ) : null}
     </div>

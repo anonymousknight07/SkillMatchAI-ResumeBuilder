@@ -6,18 +6,28 @@ export const connectToDB = async () => {
   mongoose.set("strictQuery", true);
 
   if (!process.env.MONGODB_URL) {
-    return console.error("MongoDB URL not found");
+    throw new Error("MONGODB_URL is not defined in environment variables");
   }
 
   if (isConnected) {
-    return;
+    return console.log("Already connected to MongoDB");
   }
 
   try {
-    await mongoose.connect(process.env.MONGODB_URL);
+    const options = {
+      dbName: "resumebuilder",
+      connectTimeoutMS: 30000,
+      socketTimeoutMS: 30000,
+      serverSelectionTimeoutMS: 30000,
+    };
+
+    await mongoose.connect(process.env.MONGODB_URL, options);
+    
     isConnected = true;
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error(error);
+    console.log("Connected to MongoDB successfully");
+  } catch (error: any) {
+    console.error("MongoDB connection error:", error);
+    isConnected = false;
+    throw new Error(`Failed to connect to MongoDB: ${error.message}`);
   }
 };

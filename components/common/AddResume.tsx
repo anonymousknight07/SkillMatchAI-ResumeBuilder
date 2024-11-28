@@ -112,7 +112,7 @@ const AddResume = ({ userId }: { userId: string | undefined }) => {
                     <FormControl>
                       <Input
                         type="text"
-                        placeholder="Example: Android Developer Resume"
+                        placeholder="Example: Fullstack Developer Resume"
                         className="no-focus"
                         autoComplete="off"
                         {...field}
