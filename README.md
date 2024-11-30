@@ -47,3 +47,5 @@ npm run build
 ## Contributing
 
 Contributions are welcome! Please create an issue to discuss the feature or bug before creating a pull request
+
+![transparentlogo](https://github.com/user-attachments/assets/07b16e6e-d07c-44d6-8b21-8717e7ff5d04)
